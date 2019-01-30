@@ -1,7 +1,12 @@
 # coding: utf-8
+""" copyright© 2019 — Luc Bertin - License MIT """
 
 from tkinter import *
 from Twitter_Class_Analysis import Twitter_Analysis
+from Linkedin_Companies_scrapping import LinkedIn_Analysis
+
+
+analysisLkdIn = LinkedIn_Analysis()
 
 # FRONT
 def action_on_button1():
@@ -37,9 +42,27 @@ def action_on_button3():
     analysis.tweets_to_dataframe()
     display_message.config(text = "Dataframe disponible !")
 
+def action_on_button4():
+    global analysisLkdIn
+    if analysisLkdIn.STOP_EXECUTION==0:
+        keyword = str(LinkedInKeyword_entry.get())
+        output_filename = "LinkedInCompanies"+str(filename_entry.get())+".csv"
+        analysisLkdIn.keyword = keyword
+        analysisLkdIn.output_filename = output_filename
+        analysisLkdIn.start()
+        analysisLkdIn.STOP_EXECUTION=1
+    elif analysisLkdIn.STOP_EXECUTION==1:
+        analysisLkdIn.STOP_EXECUTION = 2
+        print('finish1')
+        analysisLkdIn.join()
+        print('finish2')
+        analysisLkdIn = LinkedIn_Analysis()
+        display_message.config(text = "execution stopped !")
+
+
 root = Tk()
 root.title('PI2 Project — Twitter Analysis')
-root.geometry('{}x{}'.format(350, 400))
+root.geometry('{}x{}'.format(350, 500))
 root.update()
 root.minsize(root.winfo_width(), root.winfo_height())
 
@@ -61,6 +84,11 @@ tweeterJson_button = Button(root, text='JSON', width=25, command=action_on_butto
 tweeterCSV_button = Button(root, text='CSV', width=25, command=action_on_button3)
 
 
+LinkedInKeyword_label = Label(root, text='Pas de CSV d\'entreprise?\n Quel Keyword d\'entreprise :')
+LinkedInKeyword_entry = Entry(root, background="bisque")
+LindedIn_ico = PhotoImage(file="linkedin-3-32.gif")
+LinkedIn_button = Button(root, image=LindedIn_ico, command=action_on_button4)
+
 
 ## Default values
 dico_entry.insert(END, 'dico_file.txt')
@@ -68,6 +96,7 @@ companiesLinkedInfile_entry.insert(END, 'LinkedInCompanies.csv')
 filename_entry.insert(END, 'tweets')
 maxtweets_entry.insert(END, '200')
 company_entry.insert(END, 'Nike')
+LinkedInKeyword_entry.insert(END, 'environnement')
 
 
 
@@ -86,5 +115,8 @@ tweeterJson_button.pack()
 tweeterCSV_button.pack()
 display_message.pack()
 
+LinkedInKeyword_label.pack()
+LinkedInKeyword_entry.pack()
+LinkedIn_button.pack()
 
 root.mainloop()

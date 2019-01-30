@@ -7,7 +7,7 @@ from datetime import datetime
 import pandas as pd
 
 class Twitter_Analysis:
-    
+    """ copyright© 2019 — Luc Bertin - License MIT """
     __consumer_key = 'PSXYFbBa8Pd8jVk6NIt1R3wlN'
     __token = '1PpSRhZHtQpq5QVjVH2CNkwA4Nr7nmspDMlbbv9iiBzXu6Jn7X'
     __api = None
@@ -24,11 +24,6 @@ class Twitter_Analysis:
         # This is what we're searching for :
         self.searchQuery = " OR ".join(['\"' + item + '\"' for item in self.dico_file["eco_responsable"]])
         self.searchQuery += " -filter:retweets AND -filter:replies"
-        """
-        if companies_CSV_file is not None:
-            self.searchQuery += " AND " + " OR ".join([repr(item) for item in self.companies_list])
-        """
-    
     
     
     @staticmethod
@@ -41,6 +36,8 @@ class Twitter_Analysis:
         if companies_CSV_file is not None:
         	df = pd.read_csv(companies_CSV_file, encoding='utf-8', delimiter=';')
         	companies_list = df["companies"].tolist()
+            #companies_with_twitter_account = [str(x) for x in companies_list if str(x)!='nan']
+            ##companies_with_twitter_account = [str(x) for x in companies_list if str(x)!='nan']
         	return(companies_list)
         else:
             return([])

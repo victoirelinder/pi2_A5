@@ -5,7 +5,7 @@ import pandas as pd
 import time
 import random
 class Google_Analysis:
-    
+    """ copyright© 2019 — Luc Bertin - License MIT """
     def __init__(self, term):
         self.completeQuery = 'twitter.com '+str(term)
         self.encodedQuery = self.completeQuery.replace(' ','+')
