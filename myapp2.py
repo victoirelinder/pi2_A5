@@ -5,7 +5,7 @@ from tkinter import *
 from Twitter_Class_Analysis import Twitter_Analysis
 from Linkedin_Companies_scrapping import LinkedIn_Analysis
 
-
+ressource_folder = 'ressources/'
 analysisLkdIn = LinkedIn_Analysis()
 
 # FRONT
@@ -13,10 +13,11 @@ def action_on_button1():
     display_message.config(text = str(Twitter_Analysis.authentificator()))
 
 def action_on_button2():
-    dico = str(dico_entry.get())
-    filename = str(filename_entry.get())
+    global ressource_folder
+    dico = ressource_folder+str(dico_entry.get())
+    filename = ressource_folder+str(filename_entry.get())
+    CSV_LinkedIn = ressource_folder+str(companiesLinkedInfile_entry.get())
     max_tweets = int(str(maxtweets_entry.get()))
-    CSV_LinkedIn = str(companiesLinkedInfile_entry.get())
     company_name = str(company_entry.get())
     
     print('Entreprise renseignee : ' + company_name)
@@ -33,22 +34,25 @@ def action_on_button2():
     display_message.config(text = "Fini!")
 
 def action_on_button3():
-    dico = str(dico_entry.get())
-    filename = str(filename_entry.get())
+    global ressource_folder
+    dico = ressource_folder+str(dico_entry.get())
+    filename = ressource_folder+str(filename_entry.get())
+    CSV_LinkedIn = ressource_folder+str(companiesLinkedInfile_entry.get())
+
     max_tweets = int(str(maxtweets_entry.get()))
     analysis = Twitter_Analysis(dico_file=dico, filename=filename,
                                 maxTweets=max_tweets, company_name=company_entry.get(),
-                                companies_CSV_file=companiesLinkedInfile_entry.get())
+                                companies_CSV_file=CSV_LinkedIn)
     analysis.tweets_to_dataframe()
     display_message.config(text = "Dataframe disponible !")
 
 def action_on_button4():
     global analysisLkdIn
+    global ressource_folder
     if analysisLkdIn.STOP_EXECUTION==0:
         keyword = str(LinkedInKeyword_entry.get())
-        output_filename = "LinkedInCompanies"+str(filename_entry.get())+".csv"
+        analysisLkdIn.output_filename = ressource_folder+"LinkedInCompanies"+str(filename_entry.get())+".csv"
         analysisLkdIn.keyword = keyword
-        analysisLkdIn.output_filename = output_filename
         analysisLkdIn.start()
         analysisLkdIn.STOP_EXECUTION=1
     elif analysisLkdIn.STOP_EXECUTION==1:
