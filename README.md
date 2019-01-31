@@ -24,3 +24,4 @@ To  fulfill those requirements, it has been decided to
 This is how the interface should look like :
 
 ![interface](./img/graphical_interface.png)
+# pi2_A5
